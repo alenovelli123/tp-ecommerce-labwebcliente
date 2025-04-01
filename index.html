@@ -55,10 +55,13 @@
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS y visibilidad global para módulos -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.bootstrap = bootstrap;
+  </script>
 
-  <!-- Tu código JS -->
+  <!-- Tu código JS en modo módulo -->
   <script type="module" src="./src/index.js"></script>
 </body>
 </html>
