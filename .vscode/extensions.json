@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "wilfison.haml-boostrap",
+    "esbenp.prettier-vscode"
+  ]
+}
