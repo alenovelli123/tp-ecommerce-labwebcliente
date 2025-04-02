@@ -33,6 +33,12 @@ function mostrarModal(producto) {
   document.getElementById('productoModalDesc').textContent = producto.description;
   document.getElementById('productoModalPrecio').textContent = `$${producto.price}`;
 
+  document.getElementById('btnAgregarAlCarrito').onclick = () => {
+    import('./carrito/carrito.js').then(mod => {
+      mod.agregarAlCarrito(producto);
+    });
+  };
+  
   const modal = new bootstrap.Modal(document.getElementById('productoModal'));
   modal.show();
 }
