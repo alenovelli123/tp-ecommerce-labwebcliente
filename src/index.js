@@ -1,5 +1,6 @@
 import { getProducts } from './api/api.js';
 import { renderCard } from './app/cards.js';
+import { obtenerDeStorage } from './utils/storage.js';
 
 let productosGlobal = [];
 
@@ -13,6 +14,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error("Error al iniciar la app:", error);
   }
+
+  // ✅ Detectar apertura del offcanvas y renderizar carrito
+  const offcanvas = document.getElementById('offcanvas');
+  offcanvas.addEventListener('show.bs.offcanvas', renderizarCarrito);
+
+  // ✅ Vaciar carrito al hacer clic en el botón
+  document.getElementById('vaciarCarrito').addEventListener('click', () => {
+    localStorage.removeItem('carrito');
+    renderizarCarrito();
+  });
 });
 
 // Mostrar modal al hacer clic en "Ver más"
@@ -38,7 +49,30 @@ function mostrarModal(producto) {
       mod.agregarAlCarrito(producto);
     });
   };
-  
+
   const modal = new bootstrap.Modal(document.getElementById('productoModal'));
   modal.show();
+}
+
+function renderizarCarrito() {
+  const carrito = obtenerDeStorage('carrito');
+  const lista = document.getElementById('lista-carrito');
+  const total = document.getElementById('total-carrito');
+
+  lista.innerHTML = '';
+  let totalAcumulado = 0;
+
+  carrito.forEach(prod => {
+    totalAcumulado += prod.price;
+
+    const item = document.createElement('li');
+    item.className = 'list-group-item d-flex justify-content-between align-items-center';
+    item.innerHTML = `
+      ${prod.title}
+      <span class="badge bg-primary rounded-pill">$${prod.price}</span>
+    `;
+    lista.appendChild(item);
+  });
+
+  total.textContent = totalAcumulado.toFixed(2);
 }
