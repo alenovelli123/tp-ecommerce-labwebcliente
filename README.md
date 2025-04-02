@@ -3,6 +3,11 @@
 Este proyecto es parte del curso **Laboratorio de Aplicaciones Web Cliente**. Se trata de una simulación de una tienda online (e-commerce) desarrollada con tecnologías del lado del cliente (frontend).
 
 ---
+## 🔗 Demo
+
+Puedes visitar el proyecto aquí: [Ecommerce ISTEA](https://alenovelli123.github.io/tp-ecommerce-labwebcliente/)
+
+---
 
 ## 🚀 Funcionalidades principales
 
