@@ -44,13 +44,16 @@ function mostrarModal(producto) {
   document.getElementById('productoModalDesc').textContent = producto.description;
   document.getElementById('productoModalPrecio').textContent = `$${producto.price}`;
 
+  const modalElement = document.getElementById('productoModal');
+  const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+
   document.getElementById('btnAgregarAlCarrito').onclick = () => {
     import('./carrito/carrito.js').then(mod => {
       mod.agregarAlCarrito(producto);
+      modal.hide();  // ✅ Cerrar modal después de agregar al carrito
     });
   };
 
-  const modal = new bootstrap.Modal(document.getElementById('productoModal'));
   modal.show();
 }
 
