@@ -1,7 +1,7 @@
 
 import { guardarEnStorage, obtenerDeStorage } from '../utils/storage.js';
 
-export function agregarAlCarrito(producto) {
+export function agregarAlCarrito(producto) { //Llevar a index.js
   console.log("Agregando:", producto); // ✅
   const carritoActual = obtenerDeStorage('carrito');
   carritoActual.push(producto);
