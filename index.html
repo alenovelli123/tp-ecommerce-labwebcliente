@@ -39,29 +39,30 @@
   </main>
 
   <!-- Modal Bootstrap para producto -->
-  <div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="productoModalLabel">Título del producto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-        <div class="modal-body">
-          <img src="" alt="" class="img-fluid mb-3" id="productoModalImg">
-          <p id="productoModalDesc"></p>
-          <p class="fw-bold" id="productoModalPrecio"></p>
-        </div>
+<div class="modal fade" id="productoModal" tabindex="-1" aria-labelledby="productoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productoModalLabel">Título del producto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <img src="" alt="" class="img-fluid mb-3" id="productoModalImg">
+        <p id="productoModalDesc"></p>
+        <p class="fw-bold" id="productoModalPrecio"></p>
+
+        <!-- ✅ Botón nuevo -->
+        <button id="btnAgregarAlCarrito" class="btn btn-success mt-3">Agregar al carrito</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Bootstrap JS y visibilidad global para módulos -->
+
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    window.bootstrap = bootstrap;
-  </script>
 
-  <!-- Tu código JS en modo módulo -->
+  <!-- Tu código JS -->
   <script type="module" src="./src/index.js"></script>
 </body>
 </html>
