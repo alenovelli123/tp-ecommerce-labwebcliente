@@ -2,11 +2,25 @@ import { getProducts } from './api/api.js';
 import { renderCard } from './app/cards.js';
 import { obtenerDeStorage } from './utils/storage.js';
 
+// 🌱 Referencias al DOM al inicio
+const modalElement = document.getElementById('productoModal');
+const modalTitle = document.getElementById('productoModalLabel');
+const modalImg = document.getElementById('productoModalImg');
+const modalDesc = document.getElementById('productoModalDesc');
+const modalPrice = document.getElementById('productoModalPrecio');
+const modalBtnAdd = document.getElementById('btnAgregarAlCarrito');
+
+const carritoLista = document.getElementById('lista-carrito');
+const carritoTotal = document.getElementById('total-carrito');
+const btnVaciarCarrito = document.getElementById('vaciarCarrito');
+const offcanvas = document.getElementById('offcanvas');
+
 let productosGlobal = [];
 
 console.log("App iniciada");
 
-document.addEventListener('DOMContentLoaded', async () => {
+// ✅ Inicialización de la app -- Se quita DOMContentLoaded
+(async () => {
   try {
     productosGlobal = await getProducts();
     console.log("Productos:", productosGlobal);
@@ -15,18 +29,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.error("Error al iniciar la app:", error);
   }
 
-  // ✅ Detectar apertura del offcanvas y renderizar carrito
-  const offcanvas = document.getElementById('offcanvas');
+  // Mostrar carrito al abrir offcanvas
   offcanvas.addEventListener('show.bs.offcanvas', renderizarCarrito);
 
-  // ✅ Vaciar carrito al hacer clic en el botón
-  document.getElementById('vaciarCarrito').addEventListener('click', () => {
+  // Vaciar carrito
+  btnVaciarCarrito.addEventListener('click', () => {
     localStorage.removeItem('carrito');
     renderizarCarrito();
   });
-});
+})();
 
-// Mostrar modal al hacer clic en "Ver más"
+// ✅ Mostrar modal al hacer clic en "Ver más"
 document.addEventListener('click', e => {
   if (e.target.matches('button[data-id]')) {
     const id = e.target.dataset.id;
@@ -38,19 +51,18 @@ document.addEventListener('click', e => {
 });
 
 function mostrarModal(producto) {
-  document.getElementById('productoModalLabel').textContent = producto.title;
-  document.getElementById('productoModalImg').src = producto.image;
-  document.getElementById('productoModalImg').alt = producto.title;
-  document.getElementById('productoModalDesc').textContent = producto.description;
-  document.getElementById('productoModalPrecio').textContent = `$${producto.price}`;
+  modalTitle.textContent = producto.title;
+  modalImg.src = producto.image;
+  modalImg.alt = producto.title;
+  modalDesc.textContent = producto.description;
+  modalPrice.textContent = `$${producto.price}`;
 
-  const modalElement = document.getElementById('productoModal');
   const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
 
-  document.getElementById('btnAgregarAlCarrito').onclick = () => {
+  modalBtnAdd.onclick = () => {
     import('./carrito/carrito.js').then(mod => {
       mod.agregarAlCarrito(producto);
-      modal.hide();  // ✅ Cerrar modal después de agregar al carrito
+      modal.hide(); // ✅ Cerrar modal luego de agregar al carrito
     });
   };
 
@@ -59,10 +71,7 @@ function mostrarModal(producto) {
 
 function renderizarCarrito() {
   const carrito = obtenerDeStorage('carrito');
-  const lista = document.getElementById('lista-carrito');
-  const total = document.getElementById('total-carrito');
-
-  lista.innerHTML = '';
+  carritoLista.innerHTML = '';
   let totalAcumulado = 0;
 
   carrito.forEach(prod => {
@@ -74,8 +83,8 @@ function renderizarCarrito() {
       ${prod.title}
       <span class="badge bg-primary rounded-pill">$${prod.price}</span>
     `;
-    lista.appendChild(item);
+    carritoLista.appendChild(item);
   });
 
-  total.textContent = totalAcumulado.toFixed(2);
+  carritoTotal.textContent = totalAcumulado.toFixed(2);
 }
