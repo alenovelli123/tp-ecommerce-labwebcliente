@@ -144,3 +144,16 @@ document.getElementById('input-busqueda').addEventListener('input', e => {
   );
   renderCard(filtrados);
 });
+
+// Filtro por categoría
+document.querySelectorAll('.categoria-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.categoria;
+    if (cat === 'all') {
+      renderCard(productosGlobal);
+    } else {
+      const filtrados = productosGlobal.filter(p => p.category === cat);
+      renderCard(filtrados);
+    }
+  });
+});

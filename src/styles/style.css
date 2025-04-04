@@ -117,3 +117,22 @@ nav {
   white-space: nowrap;
   overflow: hidden;
 }
+
+
+.categorias {
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.categorias .btn {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.categorias .btn:hover,
+.categorias .btn.active {
+  background-color: #ffe600;
+  color: #000;
+  border-color: #ffe600;
+  font-weight: bold;
+}
