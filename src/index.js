@@ -3,6 +3,8 @@ import { renderCard } from './app/cards.js';
 import { obtenerDeStorage, guardarEnStorage } from './utils/storage.js';
 import { alertaCompraExitosa } from './utils/alerta.js';
 
+let categoriaSeleccionada = null;
+
 const modalElement = document.getElementById('productoModal');
 const modalTitle = document.getElementById('productoModalLabel');
 const modalImg = document.getElementById('productoModalImg');
@@ -15,6 +17,8 @@ const carritoTotal = document.getElementById('total-carrito');
 const btnVaciarCarrito = document.getElementById('vaciarCarrito');
 const btnFinalizarCompra = document.getElementById('finalizarCompra');
 const offcanvas = document.getElementById('offcanvas');
+const resultadoCategoria = document.getElementById('resultado-categoria');
+const inputBusqueda = document.getElementById('input-busqueda');
 
 let productosGlobal = [];
 
@@ -40,7 +44,6 @@ let productosGlobal = [];
     const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvas);
     offcanvasInstance.hide();
 
-    // Escuchar solo una vez cuando se oculta el carrito
     function mostrarAlerta() {
       alertaCompraExitosa();
       offcanvas.removeEventListener('hidden.bs.offcanvas', mostrarAlerta);
@@ -135,25 +138,33 @@ document.addEventListener('click', e => {
   renderizarCarrito();
 });
 
-document.getElementById('input-busqueda').addEventListener('input', e => {
+// Buscador con categoría activa
+inputBusqueda.addEventListener('input', e => {
   const texto = e.target.value.toLowerCase();
-  const filtrados = productosGlobal.filter(p =>
+
+  let base = productosGlobal;
+  if (categoriaSeleccionada) {
+    base = base.filter(p => p.category === categoriaSeleccionada);
+  }
+
+  const filtrados = base.filter(p =>
     p.title.toLowerCase().includes(texto) ||
-    p.description.toLowerCase().includes(texto) ||
-    p.category.toLowerCase().includes(texto)
+    p.description.toLowerCase().includes(texto)
   );
+
   renderCard(filtrados);
 });
 
-const resultadoCategoria = document.getElementById('resultado-categoria');
+// Filtro por categorías
 
 document.querySelectorAll('.categoria-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const cat = btn.dataset.categoria;
 
-    // Resaltar botón activo
     document.querySelectorAll('.categoria-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+
+    categoriaSeleccionada = (cat === 'all') ? null : cat;
 
     if (cat === 'all') {
       renderCard(productosGlobal);
