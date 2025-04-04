@@ -1,4 +1,3 @@
-// 📁 src/index.js
 import { getProducts } from './api/api.js';
 import { renderCard } from './app/cards.js';
 import { obtenerDeStorage, guardarEnStorage } from './utils/storage.js';
@@ -14,8 +13,8 @@ const modalBtnAdd = document.getElementById('btnAgregarAlCarrito');
 const carritoLista = document.getElementById('lista-carrito');
 const carritoTotal = document.getElementById('total-carrito');
 const btnVaciarCarrito = document.getElementById('vaciarCarrito');
-const offcanvas = document.getElementById('offcanvas');
 const btnFinalizarCompra = document.getElementById('finalizarCompra');
+const offcanvas = document.getElementById('offcanvas');
 
 let productosGlobal = [];
 
@@ -37,14 +36,20 @@ let productosGlobal = [];
   btnFinalizarCompra.addEventListener('click', () => {
     localStorage.removeItem('carrito');
     renderizarCarrito();
-    alertaCompraExitosa();
 
     const offcanvasInstance = bootstrap.Offcanvas.getInstance(offcanvas);
     offcanvasInstance.hide();
+
+    // Escuchar solo una vez cuando se oculta el carrito
+    function mostrarAlerta() {
+      alertaCompraExitosa();
+      offcanvas.removeEventListener('hidden.bs.offcanvas', mostrarAlerta);
+    }
+
+    offcanvas.addEventListener('hidden.bs.offcanvas', mostrarAlerta);
   });
 })();
 
-// ✅ Mostrar modal solo si se hace clic en botón con data-id y SIN data-action
 document.addEventListener('click', e => {
   const btn = e.target.closest('button');
   if (!btn) return;
@@ -52,7 +57,6 @@ document.addEventListener('click', e => {
   const id = btn.dataset.id;
   const action = btn.dataset.action;
 
-  // Solo mostramos el modal si tiene data-id y NO tiene data-action
   if (id && !action) {
     const producto = productosGlobal.find(p => p.id == id);
     if (producto) mostrarModal(producto);
@@ -110,7 +114,6 @@ function renderizarCarrito() {
   carritoTotal.textContent = totalAcumulado.toFixed(2);
 }
 
-// ✅ SOLO maneja acciones del carrito si tiene data-action
 document.addEventListener('click', e => {
   const btn = e.target.closest('button');
   if (!btn || !btn.dataset.action) return;

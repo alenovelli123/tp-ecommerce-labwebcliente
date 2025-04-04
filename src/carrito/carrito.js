@@ -1,5 +1,5 @@
 import { guardarEnStorage, obtenerDeStorage } from '../utils/storage.js';
-import { alertaAgregadoAlCarrito } from '../utils/alerta.js';
+import Swal from 'https://cdn.jsdelivr.net/npm/sweetalert2@11/+esm';
 
 export function agregarAlCarrito(producto) {
   const carrito = obtenerDeStorage('carrito');
@@ -13,5 +13,14 @@ export function agregarAlCarrito(producto) {
   }
 
   guardarEnStorage('carrito', carrito);
-  alertaAgregadoAlCarrito(producto);
+
+  Swal.fire({
+    title: '✅ Agregado al carrito',
+    text: `${producto.title}`,
+    icon: 'success',
+    timer: 1500,
+    showConfirmButton: false,
+    toast: true,
+    position: 'top-end'
+  });
 }
