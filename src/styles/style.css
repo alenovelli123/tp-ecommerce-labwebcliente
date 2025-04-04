@@ -136,3 +136,9 @@ nav {
   border-color: #ffe600;
   font-weight: bold;
 }
+
+
+#resultado-categoria {
+  font-style: italic;
+  color: #666;
+}
