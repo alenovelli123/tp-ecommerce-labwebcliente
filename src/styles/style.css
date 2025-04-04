@@ -16,3 +16,104 @@ nav {
   background-color: transparent;
   border: none;
 }
+
+.card {
+  border-left: 5px solid #ffe600;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+
+.card-img-top {
+  height: 220px; /* antes 160 */
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1rem;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card[data-category="electronics"] {
+  border-left-color: #0d6efd;
+}
+
+.card[data-category="jewelery"] {
+  border-left-color: #d63384;
+}
+
+.card[data-category="men's clothing"] {
+  border-left-color: #198754;
+}
+
+.card[data-category="women's clothing"] {
+  border-left-color: #fd7e14;
+}
+
+/* 🛒 Offcanvas carrito */
+.offcanvas-body ul.list-group {
+  padding-left: 0;
+}
+
+.offcanvas-body .list-group-item {
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #f8f9fa;
+  margin-bottom: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.btn-group-sm .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Mensaje carrito vacío */
+.alert.alert-info {
+  font-size: 0.95rem;
+}
+
+/* Modal en pantallas pequeñas */
+@media (max-width: 576px) {
+  .modal-content {
+    width: 90% !important;
+    margin: auto;
+  }
+
+  .modal-body img {
+    max-height: 250px !important;
+  }
+
+  .modal-footer button {
+    width: 100%;
+  }
+}
+
+/* Botones del carrito */
+#finalizarCompra {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+#vaciarCarrito {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.categoria-badge {
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  display: inline-block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
